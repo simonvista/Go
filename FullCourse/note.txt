@@ -1,0 +1,674 @@
+go build
+.\FullCourse.exe
+or go run main.go
+-------------------------------------
+package main
+
+import (
+	"fmt"
+) 
+//Global variable must start with var
+// variable start with lower case can only be shared within package
+var i =11		
+// variable start with upper case can only be shared outside of package
+var I =11
+func main()  {
+	i:=1	//var i=1	//var i int=1
+	fmt.Printf("%v,%T",i,i)		//1,int
+}
+---------------------------------------------------------
+package main
+
+import (
+	"fmt"
+) 
+//Global variable must start with var
+// variable start with lower case can only be shared within package
+var i =11		
+// variable start with upper case can only be shared outside of package
+var I =11
+func main()  {
+	// i:=1
+	fmt.Printf("%v,%T",i,i)		//11,int
+}
+--------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+	"strconv"
+)
+
+//Global variable must start with var
+// variable start with lower case can only be shared within package
+//var i =11
+// variable start with upper case can only be shared outside of package
+var I =11	
+func main()  {
+	i:=97 	//var i=1	//var i int=1
+	// type casting
+	var j float32=float32(i)
+	fmt.Printf("%v,%T\n",j,j)		//97,float32
+	var foo string=string(i)	
+	fmt.Printf("%v,%T\n",foo,foo)		//a,string
+	foo=strconv.Itoa(i)				
+	fmt.Printf("%v,%T\n",foo,foo)		//97,string
+	a :=false			//var a bool=false
+	fmt.Printf("%v,%T\n",a,a)		//false,bool
+}
+-------------------------------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+
+func main()  {
+	i :=1.11e11
+	fmt.Printf("%v,%T\n",i,i)			//1.11e+11,float64
+	var j complex64=1-3i
+	fmt.Printf("%v,%T\n",j,j)			//(1-3i),complex64
+	fmt.Printf("%v,%T\n",real(j),real(j))			//1,float32
+	fmt.Printf("%v,%T\n",imag(j),imag(j))			//-3,float32
+	var k complex64=complex(2,-3)
+	fmt.Printf("%v,%T\n",k,k)					//(2-3i),complex64
+	fmt.Printf("%v,%T\n",real(k),real(k))		//2,float32
+	fmt.Printf("%v,%T\n",imag(k),imag(k))		//-3,float32
+	fmt.Println(j+k)			//(3-6i)
+	fmt.Println(j-k)			//(-1+0i)
+	fmt.Println(j*k)			//(-7-9i)
+	fmt.Println(j/k)			//(0.84615386-0.23076923i)
+}
+---------------------------------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+
+func main()  {
+	s1 :="Hi "
+	s2 :="Jame"
+	fmt.Println(s1+s2)			//Hi Jame
+	s3 :=[]byte(s1+s2)
+	fmt.Printf("%v,%T\n",s3,s3)		//[72 105 32 74 97 109 101],[]uint8
+	s :='T'
+	fmt.Printf("%v,%T\n",s,s)		//84,int32==rune
+}
+-------------------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+// Global constants shared outside of package
+const (
+	User string="Admin"
+	Product string="Wheat"
+)
+
+func main()  {
+	// constant
+	const i int=11	
+}
+-----------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+
+// Global constants shared
+const (
+	i=iota		//0
+	j			//1
+	k			//2
+)
+const (
+	a=iota		//0
+	b			//1
+	c			//2
+	d			//3
+)
+const (
+	x=iota+1	//1
+	_
+	y			//3
+	z			//4
+)
+/* const (
+	i=iota		//0
+	j=iota		//1
+	k=iota		//2
+) */
+
+func main()  {
+	// constant
+	fmt.Println(i)		//0
+	fmt.Println(j)		//1
+	fmt.Println(k)		//2
+	fmt.Println(a)		//0
+	fmt.Println(b)		//1
+	fmt.Println(c)		//2
+	fmt.Println(d)		//3
+	fmt.Println(x)		//1
+	fmt.Println(y)		//3
+	fmt.Println(z)		//4
+}
+--------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+
+func main()  {
+	//Array is immutable -> fixed size
+	// 1D Array
+	var a [3]int=[3]int{1,2,3}
+	// a :=[3]int{1,2,3}
+	fmt.Println(a,len(a))			//[1 2 3] 3
+	// if size is unknown, use ...
+	b :=[...]int{1,2,3,4,5,6}
+	fmt.Println(b,len(b))			//[1 2 3 4 5 6] 6
+	
+	// Use reference to change array
+	x :=&a
+	x[0]=-1
+	a[2]=-3
+	fmt.Println(a,len(a))			//[-1 2 -3] 3
+	fmt.Println(x,len(x))			//&[-1 2 -3] 3
+	// slicing
+	b1 :=b[:]
+	fmt.Println(b1,len(b1))			//[1 2 3 4 5 6] 6
+	b2 :=b[2:]
+	fmt.Println(b2,len(b2))			//[3 4 5 6] 4
+	b3 :=b[:5]
+	fmt.Println(b3,len(b3))			//[1 2 3 4 5] 5
+
+	// 2D Array
+	a :=[2][3]int{
+	// var a [2][3]int=[2][3]int{
+		{1,2,3},
+		{-1,-2,-3},
+	}
+	fmt.Println(a)			//[[1 2 3] [-1 -2 -3]]
+}
+----------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+
+func main()  {
+	// slice is mutable
+	a :=[]int{1,2,3}
+	fmt.Println(a,len(a))			//[1 2 3] 3 
+	b :=a
+	fmt.Println(b,cap(b))			//[1 2 3] 3 
+	a[0]=-1
+	b[2]=-3
+	fmt.Println(a,b)			//[-1 2 -3] [-1 2 -3]
+
+	// Capacity >=length
+	x :=make([]int,3,10)			//len:3, cap:10
+	fmt.Println(len(x),cap((x)))		//3 10
+
+	a1 :=[]int{1,2,3}
+	var y []int=append(a1[1:],0)
+	// Go spread operator ... is other side of JS!!
+	var y1 []int=append(a1,y...)
+	fmt.Println(y,y1)					//[2 3 0] [1 2 3 2 3 0]
+	fmt.Printf("Type: %T, len: %d, cap: %d\n",y,len(y),cap(y))		//Type: []int, len: 3, cap: 4
+}
+----------------------------------------------------------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+
+func main()  {
+	// Map is mutable
+	// a :=make(map[string]int)
+	// Same syntax to modify or add map element
+	a :=map[string]int{"a":1,"b":2,"c":3}
+	fmt.Println(a,len(a))				//map[a:1 b:2 c:3] 3
+	// Check if an element is in map
+	res,ok :=a["d"]					//0 false
+	fmt.Println(res,ok)
+	res,ok =a["c"]				
+	fmt.Println(res,ok)				//3 true
+	// copy map
+	b :=a							//b binds to a!!!!
+	a["a"],b["c"]=-1,-3
+	fmt.Println(a,b)				//map[a:-1 b:2 c:-3] map[a:-1 b:2 c:-3]
+	// delete map element by using delete function
+	delete(a,"c")
+	fmt.Println(a,b)				//map[a:-1 b:2] map[a:-1 b:2]
+}
+-------------------------------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+	
+func main()  {
+	// Defer
+	fmt.Println(1)	
+	defer fmt.Println(2)	
+	fmt.Println(3)			//1\n 3\n 2\n
+}
+----------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+	
+func main()  {
+	// Defer
+	// defer (LIFO - stack): stack on top of each other. Run from top to bottom in stack.
+	defer fmt.Println(1)	
+	defer fmt.Println(2)	
+	defer fmt.Println(3)			//3\n 2\n 1\n
+}
+--------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+	"os"
+)
+	
+func main()  {
+	// Defer, Panic and Recover
+	f :=createFile("defer.txt")
+	defer closeFile(f)
+	writeFile(f)				//creating\n writing\n closing\n
+}
+
+func createFile(p string) *os.File {
+	fmt.Println("creating")
+	f, err :=os.Create(p)
+	if err !=nil {
+		panic(err)
+	}
+	return f
+}
+func writeFile(f *os.File)  {
+	fmt.Println("writing")
+	fmt.Fprintln(f,"data")		//write "data" to f
+}
+func closeFile(f *os.File) {
+	fmt.Println("closing")
+	err :=f.Close()
+	if err!=nil {
+		fmt.Fprintf(os.Stderr,"error: %v\n",err)
+		os.Exit(1)
+	}
+}
+-----------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+	
+func main()  {
+	// Defer, Panic and Recover
+	fmt.Println("start")
+	panic("panic")		//start\n panic: panic
+	fmt.Println("end")	//blocks after panic never executed
+}
+------------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+	
+func main()  {
+	// Pointer
+	a :=12
+	b :=&a
+	// var b *int=&a	
+	fmt.Printf("%T, %v, %d\n",b,b,*b)		//*int, 0xc0000120a0, 12
+}
+-----------------------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+type Foo struct {
+	bar int
+}	
+func main()  {
+	// Pointer
+	f :=Foo{1}
+	fmt.Println(f)			//{1}
+	var foo *Foo
+	fmt.Println(foo)		//<nil>
+	foo=new(Foo)
+	fmt.Println(foo)		//&{0}
+	// dereference
+	fmt.Println(*foo)		//{0}
+	fmt.Println(foo.bar)		//0
+	// fmt.Println((*foo).bar)		//0
+	foo.bar=11
+	// (*foo).bar=11	
+	fmt.Println((*foo).bar)		//11
+}
+------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+
+func main()  {
+	// function can be sitting on top or below main
+	msg :="Hello"
+	setMessage(msg)		//Hello
+	fmt.Println(msg)	//Hello
+	setMessage1(&msg)		//Hello
+	fmt.Println(msg)	//Hi
+
+}
+
+func setMessage(msg string)  {
+	fmt.Println(msg)
+	msg="Hi"
+}
+func setMessage1(msg *string)  {
+	fmt.Println(*msg)
+	*msg="Hi"
+}
+-----------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+
+func main()  {
+	// function can be sitting on top or below main
+	fmt.Println(sum(1,2,3))			//6
+	fmt.Println(sum(1,2,3,4))		//10
+	divide(3.1,1.2)					//2.58
+	val,err :=divide1(3,0)
+	if err!=nil {
+		fmt.Println(err)			//divisor can't be zero
+	}else{
+		fmt.Println(val)
+	}				
+	val,_ =divide1(3,1.5)
+	fmt.Println(val)				//2 
+}
+// ... must be put at begin of last parameter
+func sum(values ...int) int {
+	total :=0					//[]int
+	fmt.Printf("%T\n",values)
+	for _,v :=range values {
+		total+=v
+	}
+	return total
+}
+func divide(a,b float64) {
+// func divide(a float64,b float64) {
+	c :=a/b
+	// fmt.Printf("%T\n",c)		//float64
+	fmt.Printf("%.2f\n",c)
+}
+func divide1(a,b float64) (float64,error) {
+	if b==0 || b==0.0 {
+		return 0.0,fmt.Errorf("divisor can't be zero")
+	}
+	return a/b,nil
+}
+--------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+
+func main()  {
+	// Anonymous function must be inside of main function
+	func ()  {
+		fmt.Println("Inside anonymous function")	//Inside anonymous function
+	}()
+}
+-------------------------------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+
+func main()  {
+	// Pass anonymous function to a variable
+	fun1 :=func ()  {
+		fmt.Println("Inside anonymous function")	//Inside anonymous function
+	}
+	fun1()
+}
+-------------------------------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+)
+
+func main()  {
+	// anonymous function for struct 
+	r :=rectangle{3,5}
+	fmt.Println(r.area())		//15
+}
+
+type rectangle struct {
+	width,height int
+}
+// obj inside parenthese means owner of the function
+func (r rectangle) area() int {
+	return r.width*r.height
+}
+-------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func main()  {
+	// interface
+	var r geometry=circle{2}
+	fmt.Println(r.area())
+	fmt.Println(r.perimeter())
+	var c geometry=rectangle{3,5}
+	fmt.Println(c.area())
+	fmt.Println(c.perimeter())
+}
+// 3 steps as follows:
+// 1: declare interface
+type geometry interface {
+	area() float64
+	perimeter() float64
+}
+
+// 2: declare structs which will implement interface with methods (3)
+type circle struct{
+	radius float64
+}
+type rectangle struct{
+	width,height float64
+}
+
+// 3:declare methods for structs
+func (c circle) area() float64  {
+	return math.Pi*c.radius*c.radius
+}
+func (c circle) perimeter() float64  {
+	return 2*math.Pi*c.radius
+}
+func (r rectangle) area() float64  {
+	return r.height*r.width
+}
+func (r rectangle) perimeter() float64  {
+	return 2*(r.height+r.width)
+}
+----------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main()  {
+	/* A Goroutine (function prefixed with go) is a function or method which executes independently and simultaneously in connection with any other Goroutines present in your program. 
+	Or in other words, every concurrently executing activity in Go language is known as a Goroutines. You can consider a Goroutine like a light weighted thread. */
+	go sendMsg()
+	time.Sleep(1000*time.Microsecond)		//after 1 second, sendMsg()
+}
+
+func sendMsg()  {
+	fmt.Println("Hi")
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main()  {
+	/* A Goroutine (function prefixed with go) is a function or method which executes independently and simultaneously in connection with any other Goroutines present in your program. 
+	Or in other words, every concurrently executing activity in Go language is known as a Goroutines. You can consider a Goroutine like a light weighted thread. */
+	msg :="Hello"
+	// Annonymous function
+	go func ()  {
+		fmt.Println(msg)
+	}()
+	msg="Hi Go!!!"
+	fmt.Println(msg)
+	time.Sleep(1000*time.Microsecond)		// Hi Go!!!\n Hello\n
+}
+===============================================================================================================
+PS C:\Users\YL\Desktop\Tutorials\Go\src\github.com\simonvista\DailyCodeBuffer\FullCourse> go run -race main.go
+Hi Go!!!
+==================
+WARNING: DATA RACE
+Read at 0x00c0000881e0 by goroutine 7:
+  main.main.func1()
+      C:/Users/YL/Desktop/Tutorials/Go/src/github.com/simonvista/DailyCodeBuffer/FullCourse/main.go:14 +0x44
+
+Previous write at 0x00c0000881e0 by main goroutine:
+  main.main()
+      C:/Users/YL/Desktop/Tutorials/Go/src/github.com/simonvista/DailyCodeBuffer/FullCourse/main.go:16 +0xa7
+
+Goroutine 7 (running) created at:
+  main.main()
+      C:/Users/YL/Desktop/Tutorials/Go/src/github.com/simonvista/DailyCodeBuffer/FullCourse/main.go:13 +0x99
+==================
+Hi Go!!!
+Found 1 data race(s)
+exit status 66
+================================================================================================================
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main()  {
+	/* A Goroutine (function prefixed with go) is a function or method which executes independently and simultaneously in connection with any other Goroutines present in your program. 
+	Or in other words, every concurrently executing activity in Go language is known as a Goroutines. You can consider a Goroutine like a light weighted thread. */
+	msg :="Hello"
+	// Annonymous function
+	go func (msg1 string)  {
+		fmt.Println(msg1)
+	}(msg)
+	msg="Hi Go!!!"
+	fmt.Println(msg)
+	time.Sleep(1000*time.Microsecond)		// Hello\n Hi Go!!!\n 
+}
+==============================================================================================================
+PS C:\Users\YL\Desktop\Tutorials\Go\src\github.com\simonvista\DailyCodeBuffer\FullCourse> go run -race main.go
+Hi Go!!!
+Hello
+------------------------------------------------------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+var wg=sync.WaitGroup{}
+func main()  {
+	/* A Goroutine (function prefixed with go) is a function or method which executes independently and simultaneously in connection with any other Goroutines present in your program. 
+	Or in other words, every concurrently executing activity in Go language is known as a Goroutines. You can consider a Goroutine like a light weighted thread. */
+	msg :="Hello"
+	wg.Add(1)
+	// Annonymous function
+	go func ()  {
+		fmt.Println(msg)
+		wg.Done()
+	}()
+	msg="Hi Go!!!"
+	fmt.Println(msg)
+	wg.Wait()
+	// time.Sleep(1000*time.Microsecond)		// Hello\n Hi Go!!!\n 
+}
+==============================================================================================================
+PS C:\Users\YL\Desktop\Tutorials\Go\src\github.com\simonvista\DailyCodeBuffer\FullCourse> go run -race main.go
+Hi Go!!!
+Hello
+------------------------------------------------------------------------------------------
+package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+// var wg=sync.WaitGroup{}
+func worker(id int,wg *sync.WaitGroup){
+	defer wg.Done()
+	fmt.Printf("Worker %d starting\n",id)
+	time.Sleep(time.Second)
+	fmt.Printf("Worker %d Done\n",id)
+}
+func main()  {
+	/* A Goroutine (function prefixed with go) is a function or method which executes independently and simultaneously in connection with any other Goroutines present in your program. 
+	Or in other words, every concurrently executing activity in Go language is known as a Goroutines. You can consider a Goroutine like a light weighted thread. */
+	var wg sync.WaitGroup
+	for i := 0; i <=5; i++ {
+		wg.Add(1)
+		go worker(i,&wg)
+	} 
+	wg.Wait()
+}
+==============================================================================================================
+PS C:\Users\YL\Desktop\Tutorials\Go\src\github.com\simonvista\DailyCodeBuffer\FullCourse> go run -race main.go
+Worker 0 starting
+Worker 1 starting
+Worker 4 starting
+Worker 3 starting
+Worker 2 starting
+Worker 5 starting
+Worker 3 Done
+Worker 1 Done
+Worker 5 Done
+Worker 2 Done
+Worker 0 Done
+Worker 4 Done
+--------------------------------------------------------------------------------------------------------------------
+
